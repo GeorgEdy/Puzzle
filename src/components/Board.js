@@ -7,9 +7,10 @@ import Tile from './Tile';
 var Board = React.createClass({
   getInitialState: function () {
     var boardSize = 400;
-    var mod = 2;
+    var mod = 4;
     var tileNumber = mod * mod -1;
-    var check = Math.floor(boardSize/mod);
+    var check = boardSize/mod;
+    var checkFloor = Math.floor(check);
     var emptyPosVal = boardSize - check;
     var board = [];
     for (var i = 0; i < tileNumber; i++) {
@@ -29,7 +30,8 @@ var Board = React.createClass({
       tileNumber: tileNumber,
       boardSize: boardSize,
       mod: mod,
-      check: check
+      check: check,
+      checkFloor: checkFloor
     }
   },
 
@@ -102,13 +104,11 @@ var Board = React.createClass({
 
   isValidMove: function (startPos, targetPos) {
     var diffX = Math.floor(Math.abs(targetPos.x - startPos.x));
-    var diffY = Math.floor(Math.abs(targetPos.y - startPos.y));
-    var validX = diffX === this.state.check && diffY === 0;
-    var validY = diffY === this.state.check && diffX === 0;
-
+    var diffY =Math.floor(Math.abs(targetPos.y - startPos.y));
+    var validX = diffX === this.state.checkFloor && diffY === 0;
+    var validY = diffY === this.state.checkFloor && diffX === 0;
     return !!(validX || validY);
   }
-
 });
 
 export default Board;
